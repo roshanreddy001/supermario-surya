@@ -53,29 +53,43 @@
             </div>
             <canvas id="gameCanvas" width="800" height="450"></canvas>
 
+            <div id="mobile-controls">
+                <div class="d-pad">
+                    <button id="btn-left" class="control-btn">◀</button>
+                    <button id="btn-right" class="control-btn">▶</button>
+                </div>
+                <div class="action-pad">
+                    <button id="btn-jump" class="control-btn">▲</button>
+                </div>
+            </div>
+
             <div id="win-overlay" class="overlay hidden">
                 <h2>LEVEL CLEARED!</h2>
                 <p>Your friend saved the day!</p>
                 <div class="fireworks"></div>
                 <button id="play-again-btn">Play Again</button>
-            </div>
 
-            <div id="game-over-overlay" class="overlay hidden">
-                <h2>GAME OVER</h2>
-                <p>Oh no, you fell!</p>
-                <button id="try-again-btn">Try Again</button>
+                <div id="game-over-overlay" class="overlay hidden">
+                    <h2>GAME OVER</h2>
+                    <p>Oh no, you fell!</p>
+                    <button id="try-again-btn">Try Again</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Hidden images to be drawn on canvas -->
-    <img id="img-char-1" src="1.jpeg" style="display:none;">
-    <img id="img-char-2" src="2.jpeg" style="display:none;">
-    <img id="img-char-3" src="3.jpeg" style="display:none;">
-    <img id="img-char-4" src="4.jpeg" style="display:none;">
-    <img id="img-boss" src="boss.jpeg" style="display:none;">
+        <div id="rotate-device-overlay">
+            <h2>ROTATE DEVICE</h2>
+            <p>Please rotate your phone to landscape mode to play.</p>
+        </div>
 
-    <script src="game.js"></script>
+        <!-- Hidden images to be drawn on canvas -->
+        <img id="img-char-1" src="1.jpeg" style="display:none;">
+        <img id="img-char-2" src="2.jpeg" style="display:none;">
+        <img id="img-char-3" src="3.jpeg" style="display:none;">
+        <img id="img-char-4" src="4.jpeg" style="display:none;">
+        <img id="img-boss" src="boss.jpeg" style="display:none;">
+
+        <script src="game.js"></script>
 </body>
 
 </html>

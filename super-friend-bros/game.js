@@ -911,3 +911,53 @@ function triggerWin() {
     }
     winSlide();
 }
+
+// --- Mobile Touch Controls ---
+const btnLeft = document.getElementById('btn-left');
+const btnRight = document.getElementById('btn-right');
+const btnJump = document.getElementById('btn-jump');
+
+function handleTouch(e, keyName, isDown) {
+    e.preventDefault();
+    if (isGameOver || isGameWon) return;
+
+    if (keyName === 'up') {
+        if (isDown) {
+            if (!keys.up && player.state !== 'fall' && player.state !== 'jump') {
+                player.dy = JUMP_FORCE;
+                player.state = 'jump';
+                playSound('jump');
+                spawnParticles(player.x + player.width / 2, player.y + player.height, 5, '#fff', 'dust');
+            }
+            keys.up = true;
+        } else {
+            keys.up = false;
+            // Variable jump height limit
+            if (player.dy < JUMP_FORCE / 2) {
+                player.dy = JUMP_FORCE / 2;
+            }
+        }
+    } else {
+        keys[keyName] = isDown;
+    }
+}
+
+if (btnLeft && btnRight && btnJump) {
+    btnLeft.addEventListener('touchstart', (e) => {
+        initAudio(); // Initialize audio on first touch
+        handleTouch(e, 'left', true);
+    }, { passive: false });
+    btnLeft.addEventListener('touchend', (e) => handleTouch(e, 'left', false), { passive: false });
+
+    btnRight.addEventListener('touchstart', (e) => {
+        initAudio();
+        handleTouch(e, 'right', true);
+    }, { passive: false });
+    btnRight.addEventListener('touchend', (e) => handleTouch(e, 'right', false), { passive: false });
+
+    btnJump.addEventListener('touchstart', (e) => {
+        initAudio();
+        handleTouch(e, 'up', true);
+    }, { passive: false });
+    btnJump.addEventListener('touchend', (e) => handleTouch(e, 'up', false), { passive: false });
+}
