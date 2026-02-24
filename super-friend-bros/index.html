@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Friend Bros</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-ui">
+        <div id="start-screen" class="screen active">
+            <h1>SUPER <span class="highlight">FRIEND</span> BROS</h1>
+            <p class="subtitle">Select your character to start the adventure!</p>
+
+            <div class="character-selection">
+                <div class="character-card" data-character="1">
+                    <img src="1.jpeg" alt="Friend 1">
+                    <h3>Friend 1</h3>
+                </div>
+                <div class="character-card" data-character="2">
+                    <img src="2.jpeg" alt="Friend 2">
+                    <h3>Friend 2</h3>
+                </div>
+                <div class="character-card" data-character="3">
+                    <img src="3.jpeg" alt="Friend 3">
+                    <h3>Friend 3</h3>
+                </div>
+                <div class="character-card" data-character="4">
+                    <img src="4.jpeg" alt="Friend 4">
+                    <h3>Friend 4</h3>
+                </div>
+            </div>
+
+            <button id="start-btn" disabled>START GAME</button>
+            <p class="instructions">Use <strong>Arrow Keys</strong> or <strong>W A S D</strong> to move and jump.</p>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="label">COINS</span>
+                    <span class="value" id="score-display">0</span>
+                </div>
+                <div class="hud-item center-hud">
+                    <span class="label">LEVEL</span>
+                    <span class="value">1-1</span>
+                </div>
+                <button id="restart-btn">Restart</button>
+            </div>
+            <canvas id="gameCanvas" width="800" height="450"></canvas>
+
+            <div id="win-overlay" class="overlay hidden">
+                <h2>LEVEL CLEARED!</h2>
+                <p>Your friend saved the day!</p>
+                <div class="fireworks"></div>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+
+            <div id="game-over-overlay" class="overlay hidden">
+                <h2>GAME OVER</h2>
+                <p>Oh no, you fell!</p>
+                <button id="try-again-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden images to be drawn on canvas -->
+    <img id="img-char-1" src="1.jpeg" style="display:none;">
+    <img id="img-char-2" src="2.jpeg" style="display:none;">
+    <img id="img-char-3" src="3.jpeg" style="display:none;">
+    <img id="img-char-4" src="4.jpeg" style="display:none;">
+    <img id="img-boss" src="boss.jpeg" style="display:none;">
+
+    <script src="game.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-A-Friend!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>Whack-A-<span class="highlight">Friend!</span></h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="label">Score</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Time</span>
+                    <span class="value" id="time">30</span>
+                </div>
+            </div>
+            <button id="start-btn">Start Crazy Game</button>
+            <p class="instructions">Click on your friend's face as fast as you can!<br><i>(Replace the image URL in index.html to use your actual friend's picture!)</i></p>
+        </header>
+
+        <div class="grid">
+            <!-- 6 holes -->
+            <div class="hole" id="hole-1">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+            <div class="hole" id="hole-2">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+            <div class="hole" id="hole-3">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+            <div class="hole" id="hole-4">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+            <div class="hole" id="hole-5">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+            <div class="hole" id="hole-6">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=CrazyFriend&backgroundColor=ffdfbf" alt="Friend" class="friend">
+                <div class="dirt"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
