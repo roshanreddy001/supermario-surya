@@ -1,515 +1,288 @@
 :root {
     --primary: #e52521;
-    --secondary: #43b047;
-    --bg-color: #5c94fc;
-    --text-color: #ffffff;
-    --dark: #121212;
-    --card-bg: rgba(255, 255, 255, 0.95);
     --gold: #fbd000;
+    --dark: #0a0a14;
+    --card-bg: rgba(255,255,255,0.93);
 }
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Outfit', sans-serif;
-    background-color: #111;
-    background-image: radial-gradient(circle at center, #2a2a2a 0%, #111 100%);
-    color: var(--text-color);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: #000;
+    color: #fff;
+    width: 100vw; height: 100vh;
     overflow: hidden;
-}
-
-/* CRT Scanline Effect Overlay */
-body::after {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0) 50%,
-            rgba(0, 0, 0, 0.1) 50%,
-            rgba(0, 0, 0, 0.1));
-    background-size: 100% 4px;
-    z-index: 100;
-    pointer-events: none;
+    position: fixed;
+    display: flex; justify-content: center; align-items: center;
+    touch-action: none;
+    -webkit-user-select: none; user-select: none;
 }
 
 #game-ui {
     position: relative;
-    width: 100%;
-    max-width: 900px;
-    aspect-ratio: 16 / 9;
-    background: var(--bg-color);
-    border: 6px solid #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 100%; height: 100%;
+    background: var(--dark);
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
 }
 
+/* ── SCREENS ── */
 .screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
+    position: absolute; inset: 0;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
     z-index: 20;
-    animation: fadeIn 0.3s ease-out forwards;
 }
+.screen.active { display: flex; }
 
-.screen.active {
-    display: flex;
-}
-
+/* ── START SCREEN ── */
 #start-screen {
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%235c94fc"/><rect width="20" height="10" x="10" y="10" fill="%23fff" opacity="0.3"/><rect width="40" height="15" x="40" y="30" fill="%23fff" opacity="0.3"/></svg>');
-    background-size: cover;
+    background: radial-gradient(ellipse at 50% 30%, #1a1a3a 0%, #000 100%);
+    z-index: 25;
 }
 
 h1 {
     font-family: 'Press Start 2P', cursive;
-    font-size: clamp(1.5rem, 4vw, 3rem);
-    color: white;
-    text-shadow: 4px 4px 0px var(--primary), -2px -2px 0px #000, 0 10px 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: clamp(1.4rem, 4vw, 2.8rem);
+    color: #fff;
+    text-shadow: 4px 4px 0 var(--primary);
+    margin-bottom: 12px;
     letter-spacing: 2px;
-    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: bounceIn 0.7s cubic-bezier(.175,.885,.32,1.275) forwards;
 }
-
-.highlight {
-    color: var(--gold);
-    text-shadow: 4px 4px 0px #e52521, -2px -2px 0px #000;
-}
+.highlight { color: var(--gold); text-shadow: 4px 4px 0 var(--primary); }
 
 .subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    font-weight: 700;
-    color: #fff;
-    text-shadow: 2px 2px 4px #000;
-    animation: slideUp 0.5s ease-out 0.2s both;
+    font-size: 1.1rem; margin-bottom: 28px;
+    color: #aaa; animation: slideUp 0.5s ease-out 0.2s both;
 }
 
 .character-selection {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 40px;
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 16px;
+    margin-bottom: 32px;
     animation: slideUp 0.5s ease-out 0.4s both;
 }
-
 .character-card {
     background: var(--card-bg);
-    border: 4px solid #ccc;
-    border-radius: 16px;
-    padding: 15px;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-align: center;
-    width: 120px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 4px solid #555;
+    border-radius: 14px;
+    padding: 14px; cursor: pointer;
+    width: 115px; text-align: center;
+    transition: all 0.2s cubic-bezier(.175,.885,.32,1.275);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
-
-.character-card:hover {
-    transform: translateY(-8px) scale(1.05);
-    border-color: var(--primary);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
+.character-card:hover  { transform: translateY(-6px) scale(1.05); border-color: var(--primary); }
 .character-card.selected {
-    border-color: var(--primary);
-    background: #fff;
-    transform: scale(1.15) translateY(-10px);
-    box-shadow: 0 0 20px var(--primary), 0 20px 40px rgba(229, 37, 33, 0.4);
-    z-index: 2;
+    border-color: var(--gold);
+    transform: scale(1.12) translateY(-8px);
+    box-shadow: 0 0 24px var(--gold);
 }
-
 .character-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #333;
-    margin-bottom: 12px;
-    object-fit: cover;
-    background: #fff;
+    width: 72px; height: 72px;
+    border-radius: 50%; border: 3px solid #333;
+    margin-bottom: 10px; object-fit: cover;
 }
+.character-card h3 { color: #111; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; }
 
-.character-card h3 {
-    color: var(--dark);
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-#start-btn,
-#restart-btn,
-#play-again-btn,
-#try-again-btn {
+#start-btn, #restart-btn, #play-again-btn, #try-again-btn, #next-level-btn {
     font-family: 'Press Start 2P', cursive;
     background: var(--primary);
-    color: white;
-    border: 4px solid #fff;
-    padding: 18px 36px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    border-radius: 12px;
-    box-shadow: 0 8px 0px #900, 0 15px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.1s;
-    text-transform: uppercase;
+    color: #fff; border: 4px solid #fff;
+    padding: 16px 32px; font-size: 1rem;
+    cursor: pointer; border-radius: 10px;
+    box-shadow: 0 8px 0 #900;
+    transition: all 0.1s; text-transform: uppercase;
     animation: slideUp 0.5s ease-out 0.6s both;
 }
+#start-btn:disabled { background: #555; box-shadow: 0 8px 0 #222; border-color: #777; cursor: not-allowed; }
+#start-btn:not(:disabled):hover, #play-again-btn:hover, #try-again-btn:hover, #next-level-btn:hover
+    { transform: translateY(2px); box-shadow: 0 6px 0 #900; }
 
-#start-btn:disabled {
-    background: #888;
-    box-shadow: 0 8px 0px #555;
-    border-color: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    animation: none;
-    opacity: 1;
-}
+.instructions { margin-top: 20px; font-size: 0.9rem; color: #aad; animation: slideUp 0.5s ease-out 0.8s both; }
 
-#start-btn:not(:disabled):hover,
-#restart-btn:hover,
-#play-again-btn:hover,
-#try-again-btn:hover {
-    transform: translateY(2px);
-    box-shadow: 0 6px 0px #900, 0 10px 15px rgba(0, 0, 0, 0.4);
-    background: #f0302b;
-}
-
-#start-btn:not(:disabled):active,
-#restart-btn:active,
-#play-again-btn:active,
-#try-again-btn:active {
-    transform: translateY(8px);
-    box-shadow: 0 0px 0px #900, 0 0px 0px rgba(0, 0, 0, 0.4);
-}
-
-.instructions {
-    margin-top: 25px;
-    font-size: 1rem;
-    color: #ffd;
-    text-shadow: 1px 1px 2px #000;
-    animation: slideUp 0.5s ease-out 0.8s both;
-}
-
-#game-screen {
-    background: transparent;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-#game-screen.active {
-    display: flex;
-}
+/* ── GAME SCREEN ── */
+#game-screen { background: transparent; z-index: 10; }
+#game-screen.active { display: flex; }
 
 canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    display: block; width: 100%; height: 100%;
+    object-fit: fill;
+    background: #050510;
 }
 
-/* Heads Up Display */
+/* ── HUD TOP BAR ── */
 .hud {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: 'Press Start 2P', cursive;
-    color: white;
-    text-shadow: 3px 3px 0 #000;
-    pointer-events: none;
-    z-index: 30;
-}
-
-.hud-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.hud-item.center-hud {
-    align-items: center;
-}
-
-.label {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    color: var(--gold);
-}
-
-.value {
-    font-size: 1.5rem;
-}
-
-#restart-btn {
-    pointer-events: auto;
+    position: absolute; top: 0; left: 0; width: 100%;
     padding: 12px 20px;
-    font-size: 0.8rem;
-    background: var(--dark);
-    box-shadow: 0 4px 0px #000;
-    border-width: 2px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    z-index: 30; pointer-events: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px; color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+.hud-left, .hud-center, .hud-right {
+    display: flex; flex-direction: column; gap: 6px;
+}
+.hud-center { align-items: center; }
+.hud-right  { align-items: flex-end; pointer-events: auto; }
+
+/* Hearts */
+#hearts-display { display: flex; gap: 5px; }
+.heart {
+    font-size: 20px;
+    transition: transform 0.15s, color 0.15s;
+    color: #ff2244;
+    filter: drop-shadow(0 0 4px #ff0033);
+}
+.heart.lost { color: #444; filter: none; }
+
+.hud-score { font-size: 14px; color: var(--gold); }
+
+/* Level badge */
+.level-badge {
+    font-size: 13px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+#timer-hud { color: #ff8844; }
+#cores-hud { color: #cc88ff; }
+
+/* Ammo / Reload */
+.ammo-row { font-size: 13px; }
+.reload-track {
+    width: 80px; height: 6px;
+    background: #333; border-radius: 3px;
+    margin-top: 4px; overflow: hidden;
+}
+#reload-bar {
+    height: 100%; width: 100%;
+    background: #00ff88;
+    border-radius: 3px;
+    transition: width 0.05s linear, background 0.3s;
+}
+
+/* Restart button in HUD */
+#restart-btn {
+    padding: 8px 14px; font-size: 0.75rem;
+    box-shadow: 0 4px 0 #700;
     animation: none;
 }
 
-/* Overlays */
-.overlay {
+/* ── BOSS HP BAR (cinematic) ── */
+#boss-bar-wrap {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    padding: 50px;
-    border-radius: 16px;
-    border: 6px solid white;
+    bottom: 80px; left: 50%;
+    transform: translateX(-50%);
+    width: min(90%, 500px);
+    z-index: 30;
+    animation: fadeIn 0.5s ease;
     text-align: center;
-    z-index: 40;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 100vmax rgba(0, 0, 0, 0.5);
-    /* Dim BG */
+}
+#boss-bar-wrap.hidden { display: none !important; }
+.boss-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px; color: #ff4444;
+    text-shadow: 0 0 10px #ff0000;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+.boss-track {
+    width: 100%; height: 14px;
+    background: #1a0000;
+    border: 2px solid #880000;
+    border-radius: 7px;
+    overflow: hidden;
+}
+#boss-hp-bar {
+    height: 100%; width: 100%;
+    background: linear-gradient(90deg, #ff0000, #ff6600);
+    border-radius: 5px;
+    transition: width 0.3s ease, background 0.5s;
+    box-shadow: inset 0 2px 4px rgba(255,200,0,0.4);
 }
 
-.overlay.hidden {
-    display: none !important;
+/* ── OVERLAYS ── */
+.overlay {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.92);
+    padding: 48px 56px;
+    border-radius: 14px;
+    border: 4px solid #fff;
+    text-align: center;
+    z-index: 50;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s ease;
 }
-
+.overlay.hidden { display: none !important; }
 .overlay h2 {
     font-family: 'Press Start 2P', cursive;
-    font-size: 2rem;
-    margin-bottom: 25px;
-    color: var(--primary);
-    line-height: 1.5;
+    font-size: 1.8rem; color: var(--primary);
     text-shadow: 3px 3px 0 #fff;
     animation: pulse 2s infinite;
 }
+#win-overlay h2 { color: var(--gold); text-shadow: 3px 3px 0 var(--primary); }
+.overlay p { font-size: 1.1rem; color: #ddd; }
 
-#win-overlay h2 {
-    color: var(--gold);
-    text-shadow: 3px 3px 0 #e52521;
-}
-
-.overlay p {
-    font-size: 1.3rem;
-    margin-bottom: 35px;
-    color: #eee;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes bounceIn {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-
-    50% {
-        transform: scale(1.05);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Mobile Controls */
+/* ── MOBILE CONTROLS ── */
 #mobile-controls {
-    display: none;
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
+    display: flex; position: absolute;
+    bottom: max(28px, env(safe-area-inset-bottom));
+    left: max(28px, env(safe-area-inset-left));
+    right: max(28px, env(safe-area-inset-right));
     justify-content: space-between;
-    padding: 0 40px;
-    z-index: 50;
-    pointer-events: none;
+    z-index: 40; pointer-events: none;
 }
+.d-pad { display: flex; gap: 14px; }
+.action-pad { display: flex; align-items: flex-end; gap: 14px; }
 
 .control-btn {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    width: 88px; height: 88px;
+    background: rgba(255,255,255,0.12);
+    border: 3px solid rgba(255,255,255,0.35);
     border-radius: 50%;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: auto;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+    color: rgba(255,255,255,0.9);
+    font-size: 34px;
+    display: flex; justify-content: center; align-items: center;
+    pointer-events: auto; touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.15);
+    transition: background 0.08s, transform 0.08s;
 }
-
-.control-btn:active {
-    background: rgba(255, 255, 255, 0.6);
-    transform: scale(0.95);
+.control-btn.active, .control-btn:active {
+    background: rgba(255,255,255,0.35);
+    transform: scale(0.88) translateY(3px);
+    border-color: rgba(255,255,255,0.7);
 }
+.shoot-btn { border-color: coral; color: coral; }
 
-.d-pad {
-    display: flex;
-    gap: 20px;
-}
-
+/* ── ROTATE DEVICE ── */
 #rotate-device-overlay {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #000;
-    color: #fff;
-    z-index: 999;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
+    display: none; position: absolute; inset: 0;
+    background: #000; color: #fff; z-index: 999;
+    flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 20px;
 }
+#rotate-device-overlay h2 { animation: none; color: #fff; text-shadow: none; font-size: 1.5rem; }
 
-#rotate-device-overlay h2 {
-    animation: none;
-    color: white;
-    text-shadow: none;
-}
+/* ── ANIMATIONS ── */
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp  { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes bounceIn { 0%{transform:scale(0.75);opacity:0} 70%{transform:scale(1.06);opacity:0.9} 100%{transform:scale(1);opacity:1} }
+@keyframes pulse    { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
 
-/* Media Queries for Mobile/Tablet */
+/* ── MOBILE MEDIA QUERY ── */
 @media (max-width: 900px) {
-    #game-ui {
-        width: 100vw;
-        height: 100vh;
-        border: none;
-        border-radius: 0;
-        max-width: 100%;
-        aspect-ratio: auto;
-    }
-
-    #game-screen {
-        width: 100%;
-        height: 100%;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    #game-screen.active {
-        display: flex;
-    }
-
-    canvas {
-        width: 100vw;
-        height: 100vh;
-        object-fit: fill;
-        /* Stretches to fill entire screen */
-    }
-
-    .control-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
-    }
-
-    .hud {
-        padding: 10px 20px;
-    }
-
-    #mobile-controls {
-        display: flex;
-        bottom: 10px;
-        padding: 0 20px;
-    }
-
-    .d-pad {
-        gap: 10px;
-    }
-
-    #start-screen h1 {
-        font-size: 2rem;
-    }
-
-    .character-card {
-        width: 100px;
-        padding: 10px;
-    }
-
-    .character-card img {
-        width: 60px;
-        height: 60px;
-    }
+    #game-ui { width: 100vw; height: 100vh; }
+    canvas { width: 100vw; height: 100vh; object-fit: fill; }
+    .control-btn { width: 88px; height: 88px; font-size: 34px; }
+    .hud { padding: 8px 14px; }
 }
-
 @media (max-width: 900px) and (orientation: portrait) {
-    #rotate-device-overlay {
-        display: flex;
-    }
+    #rotate-device-overlay { display: flex; }
 }

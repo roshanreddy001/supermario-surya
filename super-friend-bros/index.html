@@ -1,95 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Friend Bros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Shadow Protocol</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div id="game-ui">
-        <div id="start-screen" class="screen active">
-            <h1>SUPER <span class="highlight">FRIEND</span> BROS</h1>
-            <p class="subtitle">Select your character to start the adventure!</p>
+<div id="game-ui">
 
-            <div class="character-selection">
-                <div class="character-card" data-character="1">
-                    <img src="1.jpeg" alt="Friend 1">
-                    <h3>sexy surya</h3>
-                </div>
-                <div class="character-card" data-character="2">
-                    <img src="2.jpeg" alt="Friend 2">
-                    <h3>gymrat vijay</h3>
-                </div>
-                <div class="character-card" data-character="3">
-                    <img src="3.jpeg" alt="Friend 3">
-                    <h3>manoj</h3>
-                </div>
-                <div class="character-card" data-character="4">
-                    <img src="4.jpeg" alt="Friend 4">
-                    <h3>Handsome surya2</h3>
-                </div>
-            </div>
-
-            <button id="start-btn" disabled>START GAME</button>
-            <p class="instructions">Use <strong>Arrow Keys</strong> or <strong>W A S D</strong> to move and jump.</p>
+    <!-- ═══ START SCREEN ═══ -->
+    <div id="start-screen" class="screen active">
+        <h1>SHADOW <span class="highlight">PROTOCOL</span></h1>
+        <p class="subtitle">Select your agent to begin the mission</p>
+        <div class="character-selection">
+            <div class="character-card" data-character="1"><img src="4.jpeg" alt="Agent 1"><h3>Surya</h3></div>
+            <div class="character-card" data-character="2"><img src="2.jpeg" alt="Agent 2"><h3>Vijay</h3></div>
+            <div class="character-card" data-character="3"><img src="3.PNG"  alt="Agent 3"><h3>Manoj</h3></div>
+            <div class="character-card" data-character="4"><img src="4.png"  alt="Agent 4"><h3>Tiger</h3></div>
         </div>
+        <button id="start-btn" disabled>START MISSION</button>
+        <p class="instructions">
+            🎮 <strong>Arrow / WASD</strong> Move &nbsp;|&nbsp; <strong>Space / W</strong> Jump &nbsp;|&nbsp; <strong>E / Enter</strong> Shoot
+        </p>
+    </div>
 
-        <div id="game-screen" class="screen">
-            <div class="hud">
-                <div class="hud-item">
-                    <span class="label">COINS</span>
-                    <span class="value" id="score-display">0</span>
+    <!-- ═══ GAME SCREEN ═══ -->
+    <div id="game-screen" class="screen">
+
+        <!-- HUD Top Bar -->
+        <div class="hud">
+            <div class="hud-left">
+                <div id="hearts-display">
+                    <span class="heart" id="heart-1">♥</span>
+                    <span class="heart" id="heart-2">♥</span>
+                    <span class="heart" id="heart-3">♥</span>
                 </div>
-                <div class="hud-item center-hud">
-                    <span class="label">LEVEL</span>
-                    <span class="value">1-1</span>
-                </div>
-                <button id="restart-btn">Restart</button>
+                <div class="hud-score">🪙 <span id="score-display">0</span></div>
             </div>
-            <canvas id="gameCanvas" width="800" height="450"></canvas>
-
-            <div id="mobile-controls">
-                <div class="d-pad">
-                    <button id="btn-left" class="control-btn">◀</button>
-                    <button id="btn-right" class="control-btn">▶</button>
-                </div>
-                <div class="action-pad">
-                    <button id="btn-jump" class="control-btn">▲</button>
-                </div>
+            <div class="hud-center">
+                <span id="level-badge" class="level-badge">LEVEL 1</span>
+                <div id="timer-hud" style="display:none">⏱ <span id="time-display">30</span>s</div>
+                <div id="cores-hud" style="display:none">⚡ <span id="cores-display">0 / 3 Cores</span></div>
             </div>
-
-            <div id="win-overlay" class="overlay hidden">
-                <h2>LEVEL CLEARED!</h2>
-                <p>Your friend saved the day!</p>
-                <div class="fireworks"></div>
-                <button id="play-again-btn">Play Again</button>
-
-                <div id="game-over-overlay" class="overlay hidden">
-                    <h2>GAME OVER</h2>
-                    <p>Oh no, you fell!</p>
-                    <button id="try-again-btn">Try Again</button>
+            <div class="hud-right">
+                <div id="ammo-section" style="display:none">
+                    <div class="ammo-row">🔫 <span id="ammo-display">10</span></div>
+                    <div class="reload-track"><div id="reload-bar"></div></div>
                 </div>
+                <button id="restart-btn">↺</button>
             </div>
         </div>
 
-        <div id="rotate-device-overlay">
-            <h2>ROTATE DEVICE</h2>
-            <p>Please rotate your phone to landscape mode to play.</p>
+        <!-- Boss HP Cinematic Bar -->
+        <div id="boss-bar-wrap" class="hidden">
+            <div class="boss-name">☠ THE SHADOW TYCOON ☠</div>
+            <div class="boss-track"><div id="boss-hp-bar"></div></div>
         </div>
 
-        <!-- Hidden images to be drawn on canvas -->
-        <img id="img-char-1" src="1.jpeg" style="display:none;">
-        <img id="img-char-2" src="2.jpeg" style="display:none;">
-        <img id="img-char-3" src="3.jpeg" style="display:none;">
-        <img id="img-char-4" src="4.jpeg" style="display:none;">
-        <img id="img-boss" src="boss.jpeg" style="display:none;">
+        <canvas id="gameCanvas" width="800" height="450"></canvas>
 
-        <script src="game.js"></script>
+        <!-- Mobile Controls -->
+        <div id="mobile-controls">
+            <div class="d-pad">
+                <button id="btn-left"  class="control-btn">◀</button>
+                <button id="btn-right" class="control-btn">▶</button>
+            </div>
+            <div class="action-pad">
+                <button id="btn-shoot" class="control-btn shoot-btn" style="display:none">🔫</button>
+                <button id="btn-jump"  class="control-btn">▲</button>
+            </div>
+        </div>
+
+        <!-- Win Overlay -->
+        <div id="win-overlay" class="overlay hidden">
+            <h2 id="win-title">MISSION CLEAR!</h2>
+            <p id="win-msg">Proceed to next mission.</p>
+            <button id="next-level-btn">Next Mission ›</button>
+            <button id="play-again-btn" style="display:none">Play Again</button>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="game-over-overlay" class="overlay hidden">
+            <h2>AGENT DOWN</h2>
+            <p>You were eliminated. Retry the mission!</p>
+            <button id="try-again-btn">Retry</button>
+        </div>
+    </div>
+
+    <!-- Rotate Device -->
+    <div id="rotate-device-overlay">
+        <h2>ROTATE DEVICE</h2>
+        <p>Use landscape mode to play.</p>
+    </div>
+
+    <!-- Hidden character images for canvas rendering -->
+    <img id="img-char-1" src="4.jpeg"       style="display:none" alt="">
+    <img id="img-char-2" src="2.jpeg"       style="display:none" alt="">
+    <img id="img-char-3" src="3.PNG"        style="display:none" alt="">
+    <img id="img-char-4" src="4.png"        style="display:none" alt="">
+    <img id="img-boss-1" src="4.png"        style="display:none" alt="">
+    <img id="img-boss-2" src="4.jpeg"       style="display:none" alt="">
+    <img id="img-boss-final" src="bossfinal.png" style="display:none" alt="">
+</div>
+<script src="game.js"></script>
 </body>
-
 </html>
